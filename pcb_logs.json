@@ -1,0 +1,36 @@
+[
+    {
+        "pcb_id": "PCB-1",
+        "status": "Defective",
+        "accuracy": 79.56,
+        "defect_types": [
+            "short",
+            "mouse_bite",
+            "open_circuit"
+        ],
+        "timestamp": "2025-05-08 14:32:09"
+    },
+    {
+        "pcb_id": "PCB-2",
+        "status": "Good",
+        "accuracy": 90.45,
+        "defect_types": [],
+        "timestamp": "2025-05-08 14:33:39"
+    },
+    {
+        "pcb_id": "PCB-3",
+        "status": "Good",
+        "accuracy": 92.45,
+        "defect_types": [],
+        "timestamp": "2025-05-08 14:34:08"
+    },
+    {
+        "pcb_id": "PCB-4",
+        "status": "Defective",
+        "accuracy": 84.51,
+        "defect_types": [
+            "spur"
+        ],
+        "timestamp": "2025-05-13 23:04:13"
+    }
+]

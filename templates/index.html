@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %} PCB Defect Detection System {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">PCB Defect Detection Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+
+        <!-- ./col -->
+      </div>
+
+      <!-- /.row -->
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                YOLO PCB DEFECT DETECTION
+              </h3>
+
+
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content p-0">
+                <!-- Morris chart - Sales -->
+                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 700px;">
+
+                  <!-- AI code-->
+
+
+
+
+                  <div class="preview-container" id="preview-container"
+                    style="width: 650px; height: 360px; border: 3px solid #d7bb1a; background: #fffae6; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px;margin-left: 0px;">
+                    <p style="color: black;">No File Selected</p>
+                  </div>
+
+                  <form class="upload-container" method="post" enctype="multipart/form-data" name="form1"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px;">
+                    <h1 style="font-size: 24px; color: #0a0a09; margin-bottom: 15px;">Upload Image or Video</h1>
+
+                    <label class="upload-box"
+                      style="position: relative; width: 200px; height: 50px; background: #ff6600; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; color: white; cursor: pointer; transition: background 0.3s ease, transform 0.2s ease; box-shadow: 0px 4px 10px rgba(255, 102, 0, 0.4); margin-top: 0px;">
+                      Choose File
+                      <input type="file" name="file" id="inputfile" accept="image/*,video/*"
+                        style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                    </label>
+
+                    <button class="compare-btn" type="submit"
+                      style="padding: 10px 25px;margin-top: 1px; font-size: 18px; font-weight: bold; background: #e72e41; color: white; border: none; border-radius: 12px; cursor: pointer; transition: background 0.3s ease, transform 0.2s ease;margin-top: 0px;">
+                      Check Defects
+                    </button>
+                  </form>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                      const previewContainer = document.getElementById("preview-container");
+                      const storedFile = sessionStorage.getItem("uploadedFile");
+                      const storedFileType = sessionStorage.getItem("uploadedFileType");
+
+                      if (storedFile && storedFileType) {
+                        if (storedFileType.startsWith("image")) {
+                          previewContainer.innerHTML = `<img src="${storedFile}" alt="Uploaded Image" style="max-width: 100%; max-height: 100%; border-radius: 10px;">`;
+                        } else if (storedFileType.startsWith("video")) {
+                          previewContainer.innerHTML = `<video controls style="max-width: 100%; max-height: 100%; border-radius: 10px;"><source src="${storedFile}" type="${storedFileType}"></video>`;
+                        }
+                      }
+
+                      document.getElementById("inputfile").addEventListener("change", function (event) {
+                        let file = event.target.files[0];
+                        if (file) {
+                          let reader = new FileReader();
+                          reader.onload = function (e) {
+                            let fileType = file.type.split('/')[0];
+                            sessionStorage.setItem("uploadedFile", e.target.result);
+                            sessionStorage.setItem("uploadedFileType", file.type);
+
+                            if (fileType === "image") {
+                              previewContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" style="max-width: 100%; max-height: 100%; border-radius: 10px;">`;
+                            } else if (fileType === "video") {
+                              previewContainer.innerHTML = `<video controls style="max-width: 100%; max-height: 100%; border-radius: 10px;"><source src="${e.target.result}" type="${file.type}"></video>`;
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      });
+                    });
+                    document.querySelector(".upload-container").addEventListener("submit", function (event) {
+                      event.preventDefault();
+
+                      let formData = new FormData(document.querySelector(".upload-container"));
+                      fetch("/index", {
+                        method: "POST",
+                        body: formData
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          alert(data.message); // Show success or error message
+                          if (data.success) {
+                            window.location.href = data.redirect; // Redirect if successful
+                          }
+                        })
+                        .catch(error => {
+                          console.error("Error:", error);
+                          alert("✅ Processing Successfull!");
+                        });
+
+                    });
+
+
+
+                  </script>
+
+
+
+
+
+
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+
+        </section>
+
+
+        <section class="col-lg-6 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                Defected PCB Detection Results
+              </h3>
+
+
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content p-0">
+                <!-- Morris chart - Sales -->
+                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 700px;">
+
+                  <!-- AI code-->
+                  <h1> {{defect_status}}</h1>
+
+                  <!-- detected image display -->
+                  <img id="my-image" src="{{ url_for('predict_img', filename=image_path) }}"
+                    style="height:640; width:640px; display: none;" />
+
+
+
+                  <script>
+                    document.getElementById("my-image").onload = function () {
+                      this.style.display = "block";
+                    };
+                  </script>
+
+                  <!-- detected video display using opencv-->
+                  <img id="my-video-image" src="{{ url_for('video_feed') }}"
+                    style="height:640; width:640px; display: none;" />
+
+                  <script>
+                    document.getElementById("my-video-image").onload = function () {
+                      this.style.display = "block";
+                    };
+                  </script>
+
+
+                  <!-- AI code ends here-->
+
+                </div>
+
+
+              </div>
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+
+
+        </section>
+
+
+
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+        <!-- right col -->
+      </div>
+      <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- jQuery -->
+<script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="/static/assets/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="/static/assets/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="/static/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/static/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/static/assets/plugins/moment/moment.min.js"></script>
+<script src="/static/assets/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/static/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="/static/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/static/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/assets/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/static/assets/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/assets/js/demo.js"></script>
+
+{% endblock javascripts %}

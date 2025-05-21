@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/assets/css/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" type="image/png" href="/static/assets/image.png">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .alert-container {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert-success {
+            background-color: #4caf50;
+            /* Green */
+            border: 2px solid #388e3c;
+        }
+
+        .alert-danger {
+            background-color: #f44336;
+            /* Red */
+            border: 2px solid #d32f2f;
+        }
+
+        .alert-info {
+            background-color: #2196f3;
+            /* Blue */
+            border: 2px solid #1976d2;
+        }
+
+        .alert-warning {
+            background-color: #ff9800;
+            /* Orange */
+            border: 2px solid #f57c00;
+        }
+
+        .alert a {
+            color: white;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .alert i {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome! Create Your Account</h2>
+            <p>Login to continue</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <br>
+
+            <form id="registerForm" action="/register" method="POST">
+                <div class="input-group">
+                    <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
+                    <i class="fas fa-user"></i>
+                    <p id="fullnameError" class="error"></p>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <i class="fas fa-user"></i>
+                    <p id="usernameError" class="error"></p>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <i class="fas fa-envelope"></i>
+                    <p id="emailError" class="error"></p>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                    <i class="fas fa-phone"></i>
+                    <p id="mobileError" class="error"></p>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
+                    <p id="passwordError" class="error"></p>
+                </div>
+
+                <button type="submit" class="auth-btn">Sign Up</button>
+            </form>
+
+            <p class="switch-link">Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Full Name Validation (Only Alphabets and Spaces)
+            const fullnameInput = document.getElementById("fullname");
+            const fullnameError = document.getElementById("fullnameError");
+            fullnameInput.addEventListener("input", function () {
+                if (!/^[A-Za-z\s]*$/.test(fullnameInput.value)) {
+                    fullnameError.textContent = "Full Name can only contain alphabets.";
+                } else {
+                    fullnameError.textContent = "";
+                }
+            });
+
+            // Username Validation (No Only Numbers)
+            const usernameInput = document.getElementById("username");
+            const usernameError = document.getElementById("usernameError");
+            usernameInput.addEventListener("input", function () {
+                if (/^\d+$/.test(usernameInput.value)) {
+                    usernameError.textContent = "Username must contain letters and numbers.";
+                } else if (!/^[A-Za-z0-9]*$/.test(usernameInput.value)) {
+                    usernameError.textContent = "Username can only contain letters and numbers.";
+                } else {
+                    usernameError.textContent = "";
+                }
+            });
+
+            // Email Validation
+            const emailInput = document.getElementById("email");
+            const emailError = document.getElementById("emailError");
+            emailInput.addEventListener("input", function () {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value)) {
+                    emailError.textContent = "Enter a valid email.";
+                } else {
+                    emailError.textContent = "";
+                }
+            });
+
+            // Mobile Number Validation (10-digit number)
+            const mobileInput = document.getElementById("mobile");
+            const mobileError = document.getElementById("mobileError");
+            mobileInput.addEventListener("input", function () {
+                if (!/^\d{0,10}$/.test(mobileInput.value)) {
+                    mobileError.textContent = "Mobile number must be exactly 10 digits.";
+                } else {
+                    mobileError.textContent = "";
+                }
+            });
+
+            // Password Validation (At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special char)
+            const passwordInput = document.getElementById("password");
+            const passwordError = document.getElementById("passwordError");
+            passwordInput.addEventListener("input", function () {
+                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!passwordPattern.test(passwordInput.value)) {
+                    passwordError.textContent = "Must be 8+ chars, include uppercase, lowercase, number, and special character.";
+                } else {
+                    passwordError.textContent = "";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

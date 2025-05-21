@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defect Detection Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        img {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .advice-box {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Defect Detection Results</h2>
+
+        {% if image_path %}
+        <img src="{{ url_for('static', filename=image_path) }}" alt="Uploaded PCB Image">
+        {% endif %}
+
+        <h3>Detected Defects & Solutions:</h3>
+
+        {% if advice %}
+        {% for tip in advice %}
+        <div class="advice-box">
+            <p>{{ tip }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p style="color: green; font-weight: bold;">No defects detected. Your PCB looks good!</p>
+        {% endif %}
+
+        <br>
+        <a href="{{ url_for('index') }}">Upload Another Image</a>
+    </div>
+
+</body>
+
+</html>
