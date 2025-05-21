@@ -15,7 +15,7 @@ An AI-powered web application designed to automatically detect defects in Printe
 
 ## 🚀 Features
 
-- 🧠 **YOLOv9-based Detection**: Real-time PCB defect detection using advanced computer vision.
+- 🧠 **YOLOv8-based Detection**: Real-time PCB defect detection using advanced computer vision.
 - 📷 **Multi-Source Input**: image files, and video uploads.
 - 📊 **Live Dashboard**: View total scanned PCBs, defected and OK counts, and detection accuracy.
 - 📝 **Analytics & Reports**:
