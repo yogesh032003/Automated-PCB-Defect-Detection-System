@@ -12,7 +12,7 @@ An AI-powered web app to detect PCB defects using YOLOv8 with Flask backend.
 ![Dashboard](static/images/analytics.png)
 
 ## 🖼️ Upload Interface
-![Upload](static/images/dashboard.png)
+![Upload](static/images/Dashboard.png)
 
 An AI-powered web application designed to automatically detect defects in Printed Circuit Boards (PCBs) using YOLO (You Only Look Once) object detection models. Built with a modular Flask backend and a responsive frontend, the system supports real-time webcam input, image/video uploads, detailed analytics, and an interactive dashboard.
 
