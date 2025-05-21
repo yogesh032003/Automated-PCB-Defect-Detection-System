@@ -1,8 +1,5 @@
 # 🧠 Automated PCB Defect Detection System
 
-
-![Banner](static/images/Screenshot 2025-04-03 224839.png)
-
 An AI-powered web app to detect PCB defects using YOLOv8 with Flask backend.
 
 ## 🔍 Sample Detection
